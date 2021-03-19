@@ -1,17 +1,16 @@
-package com.br.natanfc.filmesflix.repository
+package com.br.natanfc.filmesflix.implementation
 
 import android.util.Log
-import com.br.natanfc.filmesflix.api.MovieRestApiTask
+import com.br.natanfc.filmesflix.framework.api.MovieRestApiTask
+import com.br.natanfc.filmesflix.data.MovieDataSource
 import com.br.natanfc.filmesflix.domain.Movie
 
-class MovieRepository(private val movieRestApiTask: MovieRestApiTask) {
-
+class MovieDataSourceImplementation(private val movieRestApiTask: MovieRestApiTask): MovieDataSource {
     companion object{
         private val TAG = "MovieRepository"
     }
     private val movieList = arrayListOf<Movie>()
-
-    fun getAllMovies(): List<Movie>{
+    override fun getAllMovies(): List<Movie>{
         val request = movieRestApiTask.retrofitApi().getAllMovies().execute()
         if (request.isSuccessful){
             request.body()?.let {
@@ -24,5 +23,4 @@ class MovieRepository(private val movieRestApiTask: MovieRestApiTask) {
         }
         return movieList
     }
-
 }
